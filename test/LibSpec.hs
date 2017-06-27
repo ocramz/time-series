@@ -21,7 +21,7 @@ spec =
       let
         row0 :: Text
         row0 = "GBPJPY,2017-06-26 21:00:00,142.3470,142.3520,142.2970,142.3140"
-      row0 ~> (rateClose <$> parseFxRow) `shouldParse` 142.3140
+      row0 ~> (rateOpen <$> parseFxRow) `shouldParse` 142.3470  
 --     -- prop "ourAdd is commutative" $ \x y ->
 --     --   ourAdd x y `shouldBe` ourAdd y x
 

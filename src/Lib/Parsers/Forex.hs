@@ -1,12 +1,12 @@
 {-# language OverloadedStrings #-}
-module Lib.Parsers.Forex (Currency, CurrencyPair(..), FxRow(..), parseFxRow) where
+module Lib.Parsers.Forex (Currency, CurrencyPair(..), FxRow(..), parseFxRow, parseFxDataset) where
 
 import Control.Applicative ((<|>))
 
 import qualified Data.Attoparsec.Internal.Types as A
 import Data.Attoparsec.Text hiding (space)
 import Data.Text
-import Data.Time
+import Data.Time (Day, TimeOfDay)
 import Attoparsec.Time
 
 
@@ -57,6 +57,10 @@ parseFxRow = do
   close <- double
   pure (FxRow cp d t open hi lo close)
   
+
+
+parseFxDataset :: A.Parser Text [FxRow Double]
+parseFxDataset = sepBy parseFxRow endOfLine <* endOfInput
   
 
 
