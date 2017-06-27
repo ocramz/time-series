@@ -9,14 +9,10 @@ import Data.Text
 import Data.Time (Day, TimeOfDay)
 import Attoparsec.Time
 
-
-
-
 data Currency = EUR | JPY | GBP | USD | CHF | AUD deriving (Eq, Show)
 
 data CurrencyPair = CPair { numerator :: Currency
                           , denominator :: Currency } deriving (Eq, Show)
-
 
 data FxRow a  = FxRow {
     currencyPair :: CurrencyPair
@@ -27,8 +23,6 @@ data FxRow a  = FxRow {
   , rateLow :: a
   , rateClose :: a
                } deriving (Eq, Show)
-
-
 
 parseCurrencyPair :: A.Parser Text CurrencyPair
 parseCurrencyPair =
