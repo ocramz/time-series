@@ -49,6 +49,7 @@ test-suite spec
                      , text
                      , hspec
                      , QuickCheck
+                     , attoparsec
                      , hspec-attoparsec
 
 source-repository head
