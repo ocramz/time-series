@@ -1,5 +1,5 @@
-# ts-ssm
+# time-series
 
 [![Build Status](https://travis-ci.org/ocramz/ts-ssm.png)](https://travis-ci.org/ocramz/ts-ssm)
 
-TODO Description.
+Experiments with time series data
