@@ -20,7 +20,9 @@ library
   ghc-options:         -Wall
   hs-source-dirs:      src
   exposed-modules:     Lib
-                       Lib.Parsers.Forex 
+                       Lib.Parsers.Forex
+                       Data.TimeSeries.Forex
+  other-modules:       Data.TimeSeries.Forex.Types                       
   build-depends:       base >= 4.7 && < 5
                      , text
                      , attoparsec

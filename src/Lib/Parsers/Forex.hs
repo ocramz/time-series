@@ -1,6 +1,8 @@
 {-# language OverloadedStrings #-}
 module Lib.Parsers.Forex (Currency, CurrencyPair(..), FxRow(..), parseFxRow, parseFxDataset) where
 
+import Data.TimeSeries.Forex.Types
+
 import Control.Applicative ((<|>))
 
 import qualified Data.Attoparsec.Internal.Types as A
@@ -9,20 +11,7 @@ import Data.Text
 import Data.Time (Day, TimeOfDay)
 import Attoparsec.Time
 
-data Currency = EUR | JPY | GBP | USD | CHF | AUD deriving (Eq, Show)
 
-data CurrencyPair = CPair { numerator :: Currency
-                          , denominator :: Currency } deriving (Eq, Show)
-
-data FxRow a  = FxRow {
-    currencyPair :: CurrencyPair
-  , date :: Day
-  , timeOfDay :: TimeOfDay
-  , rateOpen :: a
-  , rateHigh :: a
-  , rateLow :: a
-  , rateClose :: a
-               } deriving (Eq, Show)
 
 parseCurrencyPair :: A.Parser Text CurrencyPair
 parseCurrencyPair =
