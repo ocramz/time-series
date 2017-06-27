@@ -1,5 +1,5 @@
 {-# language OverloadedStrings #-}
-module Lib.Parsers.HistoricalFX where
+module Lib.Parsers.Forex (Currency, CurrencyPair(..), FxRow(..), parseFxRow) where
 
 import Control.Applicative ((<|>))
 
@@ -10,7 +10,7 @@ import Data.Time
 import Attoparsec.Time
 
 
--- GBPJPY,2017-06-26 21:00:00,142.3470,142.3520,142.2970,142.3140
+
 
 data Currency = EUR | JPY | GBP | USD | CHF deriving (Eq, Show)
 

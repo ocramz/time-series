@@ -1,2 +1,3 @@
-module Lib where
+module Lib (module X) where
 
+import Lib.Parsers.Forex as X

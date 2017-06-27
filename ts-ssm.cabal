@@ -20,12 +20,15 @@ library
   ghc-options:         -Wall
   hs-source-dirs:      src
   exposed-modules:     Lib
-  other-modules:       Lib.Parsers.HistoricalFX
+                       Lib.Parsers.Forex 
   build-depends:       base >= 4.7 && < 5
                      , text
                      , attoparsec
                      , time
                      , attoparsec-time
+                     , QuickCheck
+                     , hspec
+                     , hspec-attoparsec
 
 -- executable ts-ssm
 --   default-language:    Haskell2010
@@ -43,8 +46,10 @@ test-suite spec
   main-is:             Spec.hs
   build-depends:       base
                      , ts-ssm
+                     , text
                      , hspec
                      , QuickCheck
+                     , hspec-attoparsec
 
 source-repository head
   type:     git
