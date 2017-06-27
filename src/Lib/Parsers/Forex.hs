@@ -12,7 +12,7 @@ import Attoparsec.Time
 
 
 
-data Currency = EUR | JPY | GBP | USD | CHF deriving (Eq, Show)
+data Currency = EUR | JPY | GBP | USD | CHF | AUD deriving (Eq, Show)
 
 data CurrencyPair = CPair { numerator :: Currency
                           , denominator :: Currency } deriving (Eq, Show)
@@ -33,8 +33,15 @@ data FxRow a  = FxRow {
 parseCurrencyPair :: A.Parser Text CurrencyPair
 parseCurrencyPair =
   (string "GBPJPY" *> pure (CPair GBP JPY) ) <|>
-  (string "EURUSD" *> pure (CPair EUR USD) )
-
+  (string "EURUSD" *> pure (CPair EUR USD) ) <|>
+  (string "AUDJPY" *> pure (CPair AUD JPY) ) <|>
+  (string "AUDUSD" *> pure (CPair AUD USD) ) <|>
+  (string "EURCHF" *> pure (CPair EUR CHF) ) <|>
+  (string "EURGBP" *> pure (CPair EUR GBP) ) <|>
+  (string "EURJPY" *> pure (CPair EUR JPY) ) <|>
+  (string "GBPUSD" *> pure (CPair GBP USD) ) <|>
+  (string "USDJPY" *> pure (CPair USD JPY) )  
+  
 parseDateTime :: A.Parser Text (Day, TimeOfDay)
 parseDateTime = do
   d <- dayInISO8601
