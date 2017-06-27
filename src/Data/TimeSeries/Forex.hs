@@ -2,6 +2,8 @@ module Data.TimeSeries.Forex where
 
 import Data.TimeSeries.Forex.Types
 
+import Data.Time
+
 
 {- |
 
