@@ -24,6 +24,8 @@ library
                        Data.TimeSeries.Forex
   other-modules:       Data.TimeSeries.Forex.Types                       
   build-depends:       base >= 4.7 && < 5
+                     , mtl
+                     , transformers
                      , exceptions
                      , conduit
                      , text
@@ -31,6 +33,10 @@ library
                      , time
                      , attoparsec-time
                      , conduit-extra
+                     , plots
+                     , diagrams-lib >= 1.3.1.4
+                     -- , diagrams-rasterific
+                     , diagrams-postscript                        
                      , QuickCheck
                      , hspec
                      , hspec-attoparsec
@@ -50,11 +56,16 @@ executable forex
   main-is:             Main.hs
   build-depends:       base
                      , time-series
+                     , mtl
+                     , transformers
                      , exceptions
                      , conduit
                      , text
                      , conduit-extra
-                     -- , chart-unit
+                     , plots
+                     , diagrams-lib >= 1.3.1.4
+                     -- , diagrams-rasterific
+                     , diagrams-postscript                     
 
 test-suite spec
   default-language:    Haskell2010
@@ -64,7 +75,7 @@ test-suite spec
   main-is:             Spec.hs
   other-modules:       LibSpec
   build-depends:       base
-                     , time-series
+                     , time-series               
                      , text
                      , hspec
                      , QuickCheck
