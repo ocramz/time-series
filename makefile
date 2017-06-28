@@ -12,4 +12,4 @@ build:
 plot: 
 	# stack exec sde-plot -- series 1800 1.5 1 -o series.png
 	# stack exec sde-plot -- hist 1800 1.5 1 -o hist.png
-	stack exec forex -- -o plot.eps
+	stack exec forex -- -w 3200 -h 2400 -o plot.eps

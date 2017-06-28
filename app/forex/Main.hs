@@ -47,11 +47,11 @@ main = do
 
 open = toRealTS rateOpen
 
-toRealTS :: (FxRow a -> c) -> FxRow a -> (c, Double)
-toRealTS f = f &&& todToNum . timeOfDay
+toRealTS :: (FxRow a -> b) -> FxRow a -> (Double, b)
+toRealTS f = todToNum . date &&& f
 
-todToNum :: TimeOfDay -> Double
-todToNum = fromIntegral . fromEnum . todSec
+todToNum :: Day -> Double
+todToNum = fromIntegral . fromEnum . toModifiedJulianDay
 
 -- asdf :: MonadThrow m => ConduitM Text o m (FxDataSet Double)
 -- asdf = CA.sinkParser parseFxDataset
@@ -60,12 +60,12 @@ todToNum = fromIntegral . fromEnum . todSec
 
 timeSeriesPlot :: String -> [(Double, Double)] -> IO (Axis B V2 Double)
 timeSeriesPlot descStr d = execStateT ?? r2Axis $ do
-        xMin ?= 0
-        xMax ?= fromIntegral (Prelude.length d)
+        -- xMin ?= 0
+        -- xMax ?= fromIntegral (Prelude.length d)
         linePlot d $ do
           -- -- key descStr
           plotColor .= blue
-          lineStyle %= lwN 0.0001
+          lineStyle %= lwN 0.00001
         legendStyle . _lw .= 0
         legendTextWidth *= 4
           -- lineStyle %= (dashingG [0.3, 0.5] 0 #
