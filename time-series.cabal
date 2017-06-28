@@ -50,6 +50,9 @@ executable forex
   main-is:             Main.hs
   build-depends:       base
                      , time-series
+                     , exceptions
+                     , conduit
+                     , text
                      , conduit-extra
                      -- , chart-unit
 
