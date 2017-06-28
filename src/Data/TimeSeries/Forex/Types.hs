@@ -10,11 +10,13 @@ data CurrencyPair = CPair { numerator :: Currency
                           , denominator :: Currency } deriving (Eq, Show)
 
 data FxRow a  = FxRow {
-    currencyPair :: CurrencyPair
-  , date :: Day
+    date :: Day
   , timeOfDay :: TimeOfDay
   , rateOpen :: a
   , rateHigh :: a
   , rateLow :: a
   , rateClose :: a
                } deriving (Eq, Show)
+
+data FxDataSet a = FxDataset { currencyPair :: CurrencyPair
+                             , dataRows :: [FxRow a] } deriving (Eq, Show)

@@ -9,7 +9,7 @@ import qualified Data.Attoparsec.Internal.Types as A
 import Data.Attoparsec.Text hiding (space)
 import Data.Text
 import Data.Time (Day, TimeOfDay)
-import Attoparsec.Time
+import qualified Attoparsec.Time as AT
 
 
 
@@ -27,15 +27,13 @@ parseCurrencyPair =
   
 parseDateTime :: A.Parser Text (Day, TimeOfDay)
 parseDateTime = do
-  d <- dayInISO8601
+  d <- AT.dayInISO8601
   _ <- space
-  t <- timeOfDayInISO8601
+  t <- AT.timeOfDayInISO8601
   return (d, t)
 
-parseFxRow :: A.Parser Text (FxRow Double)
-parseFxRow = do
-  cp <- parseCurrencyPair
-  _ <- comma
+parseFxRow0 :: A.Parser Text (FxRow Double)
+parseFxRow0 = do
   (d, t) <- parseDateTime
   _ <- comma
   open <- double
@@ -45,19 +43,36 @@ parseFxRow = do
   lo <- double
   _ <- comma
   close <- double
-  pure (FxRow cp d t open hi lo close)
+  pure $ FxRow d t open hi lo close
+
+-- | parse a whole row, discarding the repeated currency pair annotation
+parseFxRow :: A.Parser Text (FxRow Double)
+parseFxRow = many1 letter *> comma *> parseFxRow0
+  
+-- | Parse the whole dataset
+parseFxDataset :: A.Parser Text (FxDataSet Double)
+parseFxDataset = do
+  curr <- parseCurrencyPair <* comma
+  r1 <- parseFxRow0 <* endOfLine
+  rs <- sepBy parseFxRow endOfLine <* endOfInput
+  pure $ FxDataset curr rs
   
 
-
-parseFxDataset :: A.Parser Text [FxRow Double]
-parseFxDataset = sepBy parseFxRow endOfLine <* endOfInput
   
 
 
 -- | helpers
+
+letters :: Char -> Bool
+letters = inClass "a-zA-Z"
 
 space, comma :: Parser Char
 space = char ' '
 comma = char ','
   
   
+
+
+t0, t1 :: Text
+t0 = "GBPJPY,2017-06-26 21:00:00,142.3470,142.3520,142.2970,142.3140"
+t1 = "2017-06-26 21:00:00,142.3470,142.3520,142.2970,142.3140"
