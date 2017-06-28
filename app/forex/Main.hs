@@ -38,6 +38,7 @@ import Control.Arrow ((&&&))
 
 fname = "data/forex/EURCHF_hour.csv"
 
+main :: IO ()
 main = do
   d <- T.readFile fname
   let pd = A.parseOnly parseFxDataset d
@@ -45,16 +46,18 @@ main = do
              Right (FxDataset cp datarows) ->
                mainWith (timeSeriesPlot (show cp) $ open <$> datarows)
 
+open :: FxRow a -> (Double, a)
 open = toRealTS rateOpen
 
 toRealTS :: (FxRow a -> b) -> FxRow a -> (Double, b)
-toRealTS f = todToNum . date &&& f
+toRealTS f = dayToNum . date &&& f
 
-todToNum :: Day -> Double
-todToNum = fromIntegral . fromEnum . toModifiedJulianDay
+dayToNum :: Day -> Double
+dayToNum = fromIntegral . fromEnum . toModifiedJulianDay
 
 -- asdf :: MonadThrow m => ConduitM Text o m (FxDataSet Double)
 -- asdf = CA.sinkParser parseFxDataset
+
 
 
 
@@ -63,7 +66,7 @@ timeSeriesPlot descStr d = execStateT ?? r2Axis $ do
         -- xMin ?= 0
         -- xMax ?= fromIntegral (Prelude.length d)
         linePlot d $ do
-          -- -- key descStr
+          -- key descStr
           plotColor .= blue
           lineStyle %= lwN 0.00001
         legendStyle . _lw .= 0
