@@ -54,7 +54,7 @@ parseFxDataset :: A.Parser Text (FxDataSet Double)
 parseFxDataset = do
   curr <- parseCurrencyPair <* comma
   r1 <- parseFxRow0 <* endOfLine
-  rs <- sepBy parseFxRow endOfLine <* endOfInput
+  rs <- sepBy parseFxRow endOfLine -- <* endOfInput
   pure $ FxDataset curr rs
   
 

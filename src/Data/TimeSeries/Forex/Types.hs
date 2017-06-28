@@ -20,3 +20,4 @@ data FxRow a  = FxRow {
 
 data FxDataSet a = FxDataset { currencyPair :: CurrencyPair
                              , dataRows :: [FxRow a] } deriving (Eq, Show)
+
