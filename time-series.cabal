@@ -1,0 +1,73 @@
+name:                time-series
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/ocramz/time-series
+license:             BSD3
+license-file:        LICENSE
+author:              Marco Zocca
+maintainer:          zocca marco gmail
+copyright:           2017 Marco Zocca
+category:            Data
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+data-dir:            data
+tested-with:         GHC == 8.0.2
+
+library
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+  hs-source-dirs:      src
+  exposed-modules:     Lib
+                       Lib.Parsers.Forex
+                       Data.TimeSeries.Forex
+  other-modules:       Data.TimeSeries.Forex.Types                       
+  build-depends:       base >= 4.7 && < 5
+                     , exceptions
+                     , conduit
+                     , text
+                     , attoparsec
+                     , time
+                     , attoparsec-time
+                     , conduit-extra
+                     , QuickCheck
+                     , hspec
+                     , hspec-attoparsec
+
+-- executable ts-ssm
+--   default-language:    Haskell2010
+--   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+--   hs-source-dirs:      app
+--   main-is:             Main.hs
+--   build-depends:       base
+--                      , ts-ssm
+
+executable forex
+  default-language:    Haskell2010
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  hs-source-dirs:      app/forex
+  main-is:             Main.hs
+  build-depends:       base
+                     , time-series
+                     , conduit-extra
+                     -- , chart-unit
+
+test-suite spec
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  other-modules:       LibSpec
+  build-depends:       base
+                     , time-series
+                     , text
+                     , hspec
+                     , QuickCheck
+                     , attoparsec
+                     , hspec-attoparsec
+
+source-repository head
+  type:     git
+  location: https://github.com/ocramz/time-series
