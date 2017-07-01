@@ -1,10 +1,13 @@
+{-# language FlexibleContexts #-}
 module Main where
 
 import Lib
 
 -- import Chart.Unit
 -- import Chart.Types
+import Control.Monad (forM, forM_)
 import Control.Monad.Trans.State
+import Control.Monad.State.Class
 import Control.Monad.Catch
 
 import Data.Conduit
@@ -14,6 +17,8 @@ import Data.Text
 import qualified Data.Text.IO as T
 
 import Data.Time
+
+import Data.Typeable
 
 import Plots
 import Plots.Axis
@@ -35,7 +40,7 @@ import qualified Data.Attoparsec.Text as A
 
 import Control.Arrow ((&&&))
 
-
+fname :: String
 fname = "data/forex/EURCHF_hour.csv"
 
 main :: IO ()
@@ -46,8 +51,11 @@ main = do
              Right (FxDataset cp datarows) ->
                mainWith (timeSeriesPlot (show cp) $ open <$> datarows)
 
-open :: FxRow a -> (Double, a)
+open, high, low, close :: FxRow a -> (Double, a)
 open = toRealTS rateOpen
+high = toRealTS rateHigh
+low = toRealTS rateLow
+close = toRealTS rateClose
 
 toRealTS :: (FxRow a -> b) -> FxRow a -> (Double, b)
 toRealTS f = dayToNum . date &&& f
@@ -58,6 +66,12 @@ dayToNum = fromIntegral . fromEnum . toModifiedJulianDay
 -- asdf :: MonadThrow m => ConduitM Text o m (FxDataSet Double)
 -- asdf = CA.sinkParser parseFxDataset
 
+
+linePlots ds = mconcat <$> forM ds plotm where
+  plotm (d, col) = 
+    linePlot d $ do
+      plotColor .= col
+      lineStyle %= lwN 0.001
 
 
 

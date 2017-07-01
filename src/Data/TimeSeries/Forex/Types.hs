@@ -21,3 +21,19 @@ data FxRow a  = FxRow {
 data FxDataSet a = FxDataset { currencyPair :: CurrencyPair
                              , dataRows :: [FxRow a] } deriving (Eq, Show)
 
+
+
+-- --
+
+data Eur = Eur deriving (Eq, Show)
+data Jpy = Jpy deriving (Eq, Show)
+data Gbp = Gbp deriving (Eq, Show)
+data Usd = Usd deriving (Eq, Show)
+data Chf = Chf deriving (Eq, Show)
+data Aud = Aud deriving (Eq, Show)
+
+newtype FxDataset' c1 c2 a = FxDataset' (FxDataSet a) deriving (Eq, Show)
+
+
+
+type EurUsd a = FxDataset' Eur Usd a
