@@ -4,7 +4,9 @@
 
 Experiments with time series data
 
-<img src="https://rawgit.com/ocramz/time-series/master/doc/plot_gbpjpy.png" height="400" width="300" >
+<center>
+<img src="https://rawgit.com/ocramz/time-series/master/doc/plot_gbpjpy.png" height="300" width="400" >
+</center>
 
 Figure 1 : Four weeks of GBP/JPY historical forex data (red: maximum, blue: minimum, black: mean-adjusted difference)
 
