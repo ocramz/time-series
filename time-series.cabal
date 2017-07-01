@@ -21,8 +21,10 @@ library
   hs-source-dirs:      src
   exposed-modules:     Lib
                        Lib.Parsers.Forex
+                       Data.TimeSeries.Plots
                        Data.TimeSeries.Forex
-  other-modules:       Data.TimeSeries.Forex.Types                       
+  other-modules:       Data.TimeSeries.Forex.Types
+                       Data.TimeSeries.Forex.Utils
   build-depends:       base >= 4.7 && < 5
                      , mtl
                      , transformers
