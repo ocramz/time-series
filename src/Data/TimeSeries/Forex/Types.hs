@@ -1,6 +1,6 @@
 module Data.TimeSeries.Forex.Types where
 
-import Data.Time (Day, TimeOfDay)
+import Data.Time -- (TimeOfDay(..), Day)
 
 
 
@@ -20,6 +20,12 @@ data FxRow a  = FxRow {
 
 data FxDataSet a = FxDataset { currencyPair :: CurrencyPair
                              , dataRows :: [FxRow a] } deriving (Eq, Show)
+
+
+-- time handling
+
+-- timeToEnum (Day d) (TimeOfDay hh mm ss) = undefined
+
 
 
 
