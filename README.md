@@ -4,6 +4,9 @@
 
 Experiments with time series data
 
+![time-series](https://rawgit.com/ocramz/time-series/master/doc/plot_gbpjpy.png)
+
+
 
 ## Datasets
 

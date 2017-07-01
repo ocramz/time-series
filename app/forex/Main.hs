@@ -41,7 +41,7 @@ import qualified Data.Attoparsec.Text as A
 import Control.Arrow ((&&&))
 
 fname :: String
-fname = "data/forex/EURUSD_hour.csv"
+fname = "data/forex/GBPJPY_hour.csv"
 
 
 main :: IO ()
@@ -52,7 +52,8 @@ main = do
              Right (FxDataset _ datarows) ->
                mainWith $ 
                  timeSeriesPlots ds where
-                   npoints = 24 * 5
+                   npoints = 500 -- 24 * 5
+                   fc = 138  -- mean correction
                    ds = [
                      -- (data_open, green),
                      (data_hi, red),
@@ -64,12 +65,16 @@ main = do
                    data_hi = take npoints $ high <$> datarows
                    data_lo = take npoints $ low <$> datarows
                    -- data_close = take npoints $ close <$> datarows
-                   data_minmaxdiff = uncurry zip (t_, zipWith (\x y -> 1.11 + x - y) (snd <$> d2) (snd <$> d1))
-                     where
-                        d2 = data_hi
-                        d1 = data_lo
-                        t_ = fst <$> d1
-                 -- timeSeriesPlot (show cp) $ open <$> datarows
+                   data_minmaxdiff = take npoints $ zipWithTS fmm rateHigh rateLow (dateTimeToNum <$> date <*> timeOfDay) datarows where
+                     fmm x y = fc + x - y
+
+zipWithTS :: (a -> b -> c)
+     -> (x -> a) -> (x -> b) -> (x -> t) -> [x] -> [(t, c)]
+zipWithTS fzip fx fy ft ts = uncurry zip (t_, zipWith fzip x y) where
+  x = fx  <$> ts
+  y = fy  <$> ts
+  t_ = ft <$> ts
+
 
 open, high, low, close :: FxRow a -> (Double, a)
 open = toRealTS rateOpen
