@@ -30,6 +30,7 @@ library
                      , transformers
                      , exceptions
                      , conduit
+                     , http-conduit
                      , text
                      , attoparsec
                      , time
