@@ -21,6 +21,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Lib
                        Lib.Parsers.Forex
+                       Lib.Parsers.GoogleFinance
                        Data.TimeSeries.Plots
                        Data.TimeSeries.Forex
   other-modules:       Data.TimeSeries.Forex.Types
@@ -29,6 +30,7 @@ library
                      , mtl
                      , transformers
                      , exceptions
+                     , resourcet
                      , conduit
                      , http-conduit
                      , text
